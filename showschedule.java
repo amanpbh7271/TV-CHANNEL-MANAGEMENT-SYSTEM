@@ -434,7 +434,9 @@ public class showschedule extends javax.swing.JFrame {
                   if(t.equals("5:30") || t.equals("4:30")  )
                       t=gettime(t,30);
                   System.out.println(t+"time");
-                 String query = "select * from weekend where starttime='"+t+"'";
+               //weekend is another table
+                
+                  String query = "select * from weekend where starttime='"+t+"'";
                  ResultSet r = st.executeQuery(query);
                  ArrayList<program> pr = new ArrayList<program>();
                  while(r.next())
@@ -583,7 +585,9 @@ public class showschedule extends javax.swing.JFrame {
  
     private void WeekdaysActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WeekdaysActionPerformed
        ((DefaultTableModel)schedule.getModel()).setNumRows(0);
-         ArrayList<showschedule> arr1 = new ArrayList<showschedule>();        
+      
+       //store program like movie
+       ArrayList<showschedule> arr1 = new ArrayList<showschedule>();        
        
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -597,6 +601,7 @@ public class showschedule extends javax.swing.JFrame {
             Statement stmt1=dbCon.createStatement();
             Statement stmt3=dbCon.createStatement();
             // checking whether show advertisement valid or not
+           
             String a = "select showname from advertisements where type='show'";
             rs = stmt.executeQuery(a);
             ArrayList<String> showad = new ArrayList<String>();
@@ -631,6 +636,7 @@ public class showschedule extends javax.swing.JFrame {
         catch(Exception e)
         {
         }
+      
         System.out.println("aman");
         String t = "1:00";
         while(!t.equals("7:00"))
@@ -645,7 +651,7 @@ public class showschedule extends javax.swing.JFrame {
            
             //select time statring from t means 1 to 7
                 
-            String query = "select * from programs where starttime='"+t+"'"; 
+            String query = "select * from programs where starttime='"+t+"'";   //select prgram which will run
             r = st.executeQuery(query);   
             String name="";
             String type="";
@@ -681,14 +687,15 @@ public class showschedule extends javax.swing.JFrame {
                 String time = t;
                 t = gettime(t,15);
               
-                arr1.add(new showschedule(time+"-"+t,name,type,duration1));   //add program 
+                arr1.add(new showschedule(time+"-"+t,name,type,duration1));   //add program  like news .moivew
                 
                 System.out.println(t);
                 
                 int flag = -1;
                 time = t;
                 t = gettime(t,3);
-                
+               // add advertisement
+               
                 for(int i=0;i<arshow.size();i++)
                 {
                     if(show >=1)
@@ -699,7 +706,7 @@ public class showschedule extends javax.swing.JFrame {
                         flag = 1;
                         show++;
                        
-                            //when this peogram have advertisements 
+                            //when this peogram have advertisements comes that run one in one hour
                     
                     } 
                 System.out.println("show  "+show);
@@ -741,7 +748,7 @@ public class showschedule extends javax.swing.JFrame {
           
             
          
-           DefaultTableModel model=(DefaultTableModel) schedule.getModel();
+         DefaultTableModel model=(DefaultTableModel) schedule.getModel();
          Object row[]=new Object[4];
          System.out.println(arr1.size()+"row ");
          for(int i=0;i<arr1.size();i++)
